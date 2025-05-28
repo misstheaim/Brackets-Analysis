@@ -42,11 +42,9 @@
                     }
                     else if (parenthesesPairs.ContainsKey(item))
                     {
-                        char peek;
-                        if (stack.TryPeek(out peek) && peek == parenthesesPairs[item])
-                            stack.Pop();
-                        else
-                        {
+                        char openBracket;
+                        if (!(stack.TryPop(out openBracket) && openBracket == parenthesesPairs[item])) 
+                        { 
                             Console.WriteLine($"Open parenthese: {item}, Index: {i}");
                             result = false;
                         }
@@ -68,10 +66,9 @@
                     }
                     else if (parenthesesPairs.ContainsValue(item))
                     {
-                        char peek;
-                        if (stack.TryPeek(out peek) && peek == parenthesesPairs.FirstOrDefault(pp => pp.Value == item).Key)
-                            stack.Pop();
-                        else
+                        char closeBracket;
+
+                        if (!(stack.TryPop(out closeBracket) && closeBracket == parenthesesPairs.FirstOrDefault(pp => pp.Value == item).Key))
                             unclosed.Add(Tuple.Create(item, i));
                     }
                     i--;
